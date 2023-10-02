@@ -11,10 +11,9 @@ T Min(T a, T b)
 	}
 }
 
-template<>
-char Min<char>(char a, char b) {
-	printf("数字以外は入力できません");
-	return '\n';
+char* Min(char a, char b) {
+	static char str[] = "数字以外は入力できません";
+	return str;
 }
 
 int main(void) {
@@ -22,7 +21,7 @@ int main(void) {
 	printf("%d\n", Min(10, 12));
 	printf("%f\n", Min(15.0f, 12.0f));
 	printf("%lf\n", Min(13.0, 12.0));
-	printf("%c", Min('s', 'd'));
+	printf("%s\n", Min('s', 'd'));
 
 	return 0;
 }
