@@ -54,12 +54,40 @@ static char Min(const char a, const char b) {
 	return 0;
 }
 
+static int ReCash(int cash, int time) {
+
+	// 最初の100円を加算
+	if (cash == 0) {
+		cash = 100;
+		return ReCash(cash, time - 1);
+	}
+	
+	if (time > 0) {
+		cash = cash * 2 - 50;
+		return ReCash(cash, time - 1);
+	}
+	
+	return cash;
+
+}
+
 int main() {
 
-	int c = Min(100, 10);
-	float d = Min(100.0f, 10.0f);
-	double e = Min(100.0f, 10.0f);
-	char f = Min('A', 'B');
+	int nomal = 0;
+	int recursive = 0;
+	int time = 1;
+
+	while (nomal >= recursive)
+	{
+
+		nomal += 1072;
+		recursive += ReCash(0, time);
+
+		printf("勤務時間:%d時間 : 一般的な賃金合計[%d]円 再帰的な賃金合計[%d]円 \n", time, nomal, recursive);
+
+		time++;
+
+	}
 
 	return 0;
 }
