@@ -51,7 +51,8 @@ int main() {
 
 	//乱数をリセットする
 	srand(time(nullptr));
-	// 関数ポインタを宣言
+
+	// ラムダ式
 	std::function<void(int)> p = [](int num) {// ダイス結果を設定
 		int diceNum = rand() % 2;
 
@@ -79,6 +80,7 @@ int main() {
 		}
 	};
 
+	// 答えを記入させる
 	SetRollAnswer(p);
 
 
