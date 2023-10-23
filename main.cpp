@@ -54,18 +54,18 @@ static char Min(const char a, const char b) {
 	return 0;
 }
 
-static int ReCash(int cash, int time) {
+static int CalcCash(int cash, int time) {
 
 	// 最初の100円を加算
 	if (cash == 0) {
 		cash = 100;
-		return ReCash(cash, time - 1);
+		return CalcCash(cash, time - 1);
 	}
 	
 	// 時間がある場合更に働く
 	if (time > 0) {
 		cash = cash * 2 - 50;
-		return ReCash(cash, time - 1);
+		return CalcCash(cash, time - 1);
 	}
 	
 	return cash;
@@ -83,7 +83,7 @@ int main() {
 	{
 		//　時給を加算する
 		nomal += 1072;
-		recursive += ReCash(0, time);
+		recursive += CalcCash(0, time);
 
 		//一時間ごとに現在の賃金合計を出力
 		printf("勤務時間:%d時間 : 一般的な賃金合計[%d]円 再帰的な賃金合計[%d]円 \n", time, nomal, recursive);
