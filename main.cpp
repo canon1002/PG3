@@ -3,16 +3,20 @@
 #include <random>
 #include <functional>
 #include <memory>
-#include "Enemy.h"
+#include "Calc.h"
 
 int main() {
 
-	// 敵の宣言
-	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>();
+	// int
+	std::unique_ptr<Calc<int>> b1 = std::make_unique<Calc<int>>(4, 7);
+	// float
+	std::unique_ptr<Calc<float>> b2 = std::make_unique<Calc<float>>(0.0012f, 0.04003f);
+	// double
+	std::unique_ptr<Calc<double>> b3 = std::make_unique<Calc<double>>(2.003367, 1.41421456);
 
-	while (enemy->GetState() != EnemyState::kEnd) {
-		enemy->Update();
-	}
+	printf("2つの数値の小さい方の値は%d\n", b1->Min());
+	printf("2つの数値の小さい方の値は%f\n", b2->Min());
+	printf("2つの数値の小さい方の値は%lf\n", b3->Min());
 
 	return 0;
 }
