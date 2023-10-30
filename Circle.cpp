@@ -21,6 +21,6 @@ void Circle::Draw() {
 	}
 
 	// 面積を表示
-	printf("この円の面積は%f平方cmです\n", area_);
+	printf("この円の面積は%6.3f平方cmです\n", area_);
 
 }

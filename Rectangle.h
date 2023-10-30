@@ -1,8 +1,14 @@
 #pragma once
 #include "IShape.h"
-class Rectangle :
-    public IShape
+
+class Rect :
+	public IShape
 {
-    void Size()override;
-    void Draw()override;
+public:
+	Rect() = default;
+	~Rect() override = default;
+
+	void Size()override;
+	void Draw()override;
 };
+

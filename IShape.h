@@ -4,7 +4,7 @@ class IShape
 public:
 
 	IShape();
-	~IShape();
+	virtual ~IShape();
 
 	virtual void SetRadius(float radius) { radius_ = radius; }
 	virtual void Size() = 0;
