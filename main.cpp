@@ -5,45 +5,32 @@
 
 typedef void (*PFunk)(int);
 
-void DiceRoll(int num) {
-
-	// ダイス結果を設定
-	int diceNum = rand() % 2;
-
-	// 時間を止める
-	Sleep(500);
-	printf("\n結");
-	Sleep(300);
-	printf("果");
-	Sleep(300);
-	printf("は");
-	Sleep(300);
-	printf("・");
-	Sleep(300);
-	printf("・");
-	Sleep(300);
-	printf("・\n\n");
-	Sleep(1500);
-
-	if (diceNum == num) {
-		printf("あたり！！\n");
-	}
-	else
-	{
-		printf("ハズレ！！\n");
-	}
-
-}
-
-void SetRollAnswer(std::function<void(int)> p) {
+/// <summary>
+/// 回答を入力して返す関数
+/// </summary>
+/// <returns>入力した回答</returns>
+int SetAnswer() {
 	// 回答を入力
 	printf("丁か半か選んでください\n");
 	printf("丁は0、半は1で入力してください\n\n");
-
 	int num = 0;
 	scanf_s("%d", &num);
 
-	p(num);
+	// 入力した値を返す
+	return num;
+}
+
+/// <summary>
+/// 一時停止する
+/// </summary>
+/// <param name="waitTime">停止する時間</param>
+void SetTImeout(int waitTime) {
+
+	// システムメッセージを表示
+	printf("\n結果は...\n\n");
+
+	// 時間を止める
+	Sleep(waitTime);
 
 }
 
@@ -51,39 +38,34 @@ int main() {
 
 	//乱数をリセットする
 	srand(time(nullptr));
+	// ランダムで正解を代入
+	int diceNum = rand() % 2;
+	// 回答を保存する
+	int answerNun = -1;
 
 	// ラムダ式
-	std::function<void(int)> p = [](int num) {// ダイス結果を設定
-		int diceNum = rand() % 2;
+	// ラムダキャプチャを&diceNumにして参照できるように
+	std::function<void(int)> answer = [&diceNum](int answerNum) {// ダイス結果を設定
 
-		// 時間を止める
-		Sleep(500);
-		printf("\n結");
-		Sleep(300);
-		printf("果");
-		Sleep(300);
-		printf("は");
-		Sleep(300);
-		printf("・");
-		Sleep(300);
-		printf("・");
-		Sleep(300);
-		printf("・\n\n");
-		Sleep(1500);
-
-		if (diceNum == num) {
-			printf("あたり！！\n");
+		if (diceNum == answerNum) {
+			printf("あたり！！\n\n");
 		}
 		else
 		{
-			printf("ハズレ！！\n");
+			printf("ハズレ！！\n\n");
 		}
 	};
 
-	// 答えを記入させる
-	SetRollAnswer(p);
-
-
+	// ループ可能にしておく
+	while (true)
+	{
+		// 答えを記入させる
+		answerNun = SetAnswer();
+		// 結果を待つ
+		SetTImeout(3000);
+		// 結果を出す(ラムダ式の引数にSetAnswerで代入した数値を入れる)
+		answer(answerNun);
+	}
 
 	return 0;
 }
