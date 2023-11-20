@@ -10,19 +10,8 @@ void DiceRoll(int num) {
 	int diceNum = rand() % 2;
 
 	// 時間を止める
-	Sleep(500);
-	printf("\n結");
-	Sleep(300);
-	printf("果");
-	Sleep(300);
-	printf("は");
-	Sleep(300);
-	printf("・");
-	Sleep(300);
-	printf("・");
-	Sleep(300);
-	printf("・\n\n");
-	Sleep(1500);
+	printf("\n結果は...\n\n");
+	Sleep(3000);
 
 	if (diceNum == num) {
 		printf("あたり！！\n");
