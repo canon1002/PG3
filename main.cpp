@@ -1,63 +1,31 @@
-#include <stdio.h>
-#include <list>
+#include<stdio.h>
+#include<thread>
 #include <iostream> 
 
-// using namespace ‚ð—p‚¢‚Ä@std:: ‚ðŽg‚í‚¸‚ÉéŒ¾‚È‚Ç‚ª‚Å‚«‚é
-using namespace std;
+void DisplayWord(const char* word) {
 
-void DisplayList(list<const char*> l) {
+	std::cout << word << std::endl;
 
-	for (list<const char*>::iterator itr = l.begin(); itr != l.end(); ++itr)
-	{
-		// ‰w–¼‚ð•\Ž¦
-		cout << *itr << endl;
-	}
+}
 
-	// •\Ž¦‚·‚é”N‘ã‚²‚Æ‚É‚í‚©‚è‚â‚·‚­‚·‚é‚½‚ß‚É‰üs‚µ‚Ä‚¨‚­
-	cout << endl;
+int main() {
 
-};
+	// thread
+	const char* th1_string = "thread1";
+	const char* th2_string = "thread2";
+	const char* th3_string = "thread3";
 
-int main(){
+	// ä¸¦åˆ—å‡¦ç†ã‚’è¡Œã†
+	// .joinã§å‹•ä½œå®Œäº†ã‚’å¾…ã¤
+	std::thread th1(DisplayWord, th1_string);
+	th1.join();
 
-	// ŽRŽèü‚Ì‰w@1970”N‚ÌƒŠƒXƒg
-	// ŽRŽèü_‰w@‚¾‚Æ’·‚¢‚Ì‚Å—ªÌhJYh‚ðŽg—p
-	list<const char*> JY{
-		"Tokyo","Kanda","Akihabara","Okachimachi","Ueno",
-		"Uguisudani","Nippori","Tabata","Komagome",
-		"Suagamo","Otsuka","Ikebukuro","Mejiro","Takanobaba",
-		"Shin-Okubo","Shinjuku","Yoyogi","Harajuku","Shibuya",
-		"Ebisu","Meguro","Gotanda","Osaki","Shinagawa",
-		"Tamachi","Hamamatsucho","Shimbashi","Yurakucho"
-	};
+	std::thread th2(DisplayWord, th2_string);
+	th2.join();
 
-	// 1970”N‚Ì‰w‚ÌƒŠƒXƒg‚ð•\Ž¦
-	cout << "[1970”N ŽRŽèü ‰wˆê——]" << endl;
-	DisplayList(JY);
+	std::thread th3(DisplayWord, th3_string);
+	th3.join();
 
-	for (list<const char*>::iterator itr = JY.begin(); itr != JY.end(); ++itr)
-	{
-		// ¼“ú•é—¢‰w(1971”NŠJ‹Æ) ‚ð’Ç‰Á
-		// insert‚Å—v‘f‚ð’Ç‰Á‚µ‚æ‚¤‚Æ‚·‚é‚ÆƒCƒeƒŒ[ƒ^‚Ì‘O•û‚É’Ç‰Á‚³‚ê‚é‚Ì‚Å
-		// ƒCƒeƒŒ[ƒ^‚ª“c’[‚Ì‚Æ‚«‚É’Ç‰Á‚·‚é
-		if (*itr == "Tabata") {
-			JY.insert(itr, "Nish-Nippori");
-		}
-	}
-
-	cout << "[2019”N ŽRŽèü ‰wˆê——]" << endl;
-	DisplayList(JY);
-
-	for (list<const char*>::iterator itr = JY.begin(); itr != JY.end(); ++itr)
-	{
-		// ‚—ÖƒQ[ƒgƒEƒFƒC‰w(2020”NŠJ‹Æ) ‚ð’Ç‰Á
-		if (*itr == "Tamachi") {
-			JY.insert(itr, "Takawa Gateway");
-		}
-	}
-
-	cout << "[2022”N ŽRŽèü ‰wˆê——]" << endl;
-	DisplayList(JY);
 
 	return 0;
 }
