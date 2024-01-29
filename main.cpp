@@ -1,30 +1,48 @@
-#include<stdio.h>
-#include<thread>
+//#include<stdio.h>
+#include <thread>
 #include <iostream> 
+#include <chrono>
+#include <string>
 
-void DisplayWord(const char* word) {
+class Test {
+public:
+	std::string str;
 
-	std::cout << word << std::endl;
+	// コンストラクタ
+	Test() = default;
 
-}
+	// ムーブコンストラクタ
+	Test(Test&& right) noexcept {
+		// std::moveで移動を行う
+		this->str = std::move(right.str);
+	}
+
+	// ムーブ代入演算子
+	Test& operator=(Test&& right) noexcept {
+		// std::moveで移動を行う
+		this->str = std::move(right.str);
+
+		return *this;
+	}
+
+};
 
 int main() {
 
-	// thread
-	const char* th1_string = "thread1";
-	const char* th2_string = "thread2";
-	const char* th3_string = "thread3";
+	// マイクロ秒で図る
+	std::chrono::microseconds ms = std::chrono::microseconds::zero();
 
-	// 並列処理を行う
-	// .joinで動作完了を待つ
-	std::thread th1(DisplayWord, th1_string);
-	th1.join();
-
-	std::thread th2(DisplayWord, th2_string);
-	th2.join();
-
-	std::thread th3(DisplayWord, th3_string);
-	th3.join();
+	Test a, b;
+	a.str = std::string(100000, 'a');
+	// 現在時間を取得
+	std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+	//	移す	
+	b = std::move(a);
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	ms = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	// double型に一度変換
+	// d = double(ms.count());
+	std::cout << ms << std::endl;
 
 
 	return 0;
