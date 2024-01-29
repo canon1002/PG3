@@ -40,8 +40,6 @@ int main() {
 	b = std::move(a);
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	ms = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-	// double型に一度変換
-	// d = double(ms.count());
 	std::cout << ms << std::endl;
 
 
