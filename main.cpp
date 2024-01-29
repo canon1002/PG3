@@ -4,21 +4,21 @@
 #include <chrono>
 #include <string>
 
-class Test {
+class MoveTest {
 public:
 	std::string str;
 
 	// コンストラクタ
-	Test() = default;
+	MoveTest() = default;
 
 	// ムーブコンストラクタ
-	Test(Test&& right) noexcept {
+	MoveTest(MoveTest&& right) noexcept {
 		// std::moveで移動を行う
 		this->str = std::move(right.str);
 	}
 
 	// ムーブ代入演算子
-	Test& operator=(Test&& right) noexcept {
+	MoveTest& operator=(MoveTest&& right) noexcept {
 		// std::moveで移動を行う
 		this->str = std::move(right.str);
 
@@ -29,19 +29,45 @@ public:
 
 int main() {
 
+	// 目的
+	std::cout<<"1000000文字を移動とコピーで移した場合の時間を計測" << std::endl;
+
+	// ムーブコンストラクタのテスト用クラス
+	MoveTest a, b,c,d;
+	a.str = std::string(1000000, 'a');
+	c.str = std::string(1000000, 'c');
+
+	//////////////////////////////////////////////
+	///	移動の場合の時間計測
+	//////////////////////////////////////////////
+
 	// マイクロ秒で図る
 	std::chrono::microseconds ms = std::chrono::microseconds::zero();
-
-	Test a, b;
-	a.str = std::string(100000, 'a');
-	// 現在時間を取得
+	// 開始時間を取得
 	std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-	//	移す	
-	b = std::move(a);
+	//	コピーする	
+	b.str = a.str;
+	// 終了時間を取得
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	// 差分を計算
 	ms = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-	std::cout << ms << std::endl;
+	std::cout << "コピー:" << ms << std::endl;
 
+	//////////////////////////////////////////////
+	///	コピーの場合の時間計測
+	//////////////////////////////////////////////
+
+	// マイクロ秒で図る
+	ms = std::chrono::microseconds::zero();
+	// 開始時間を取得
+	start = std::chrono::steady_clock::now();
+	//	移す	
+	d = std::move(c);
+	// 終了時間を取得
+	end = std::chrono::steady_clock::now();
+	// 差分を計算
+	ms = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	std::cout << "移動:" << ms << std::endl;
 
 	return 0;
 }
