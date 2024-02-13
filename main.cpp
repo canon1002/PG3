@@ -7,34 +7,6 @@
 // using namespace を用いて　std:: を使わずに宣言などができる
 using namespace std;
 
-
-// ピボットを選択する関数
-static int partition(std::vector<std::string>& str, int low, int high) {
-
-	// substrで学籍番号の数値のみを抜き出す
-	int pivot = stoi(str[high].substr(5, 4)); 
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (stoi(str[j].substr(5, 4)) < pivot) {
-            i++;
-            std::swap(str[i], str[j]); 
-        }
-    }
-
-    std::swap(str[i + 1], str[high]);
-    return i + 1;
-}
-
-// ソートを実行する関数
-static void Sort(std::vector<std::string>& str, int low, int high) {
-    if (low < high) {
-        int pi = partition(str, low, high);
-		Sort(str, low, pi - 1); // 左側
-		Sort(str, pi + 1, high); // 右側
-    }
-}
-
 int main(){
 
 	// std::vectorで宣言
@@ -79,8 +51,8 @@ int main(){
 	"k022g0090@g.neec.ac.jp","k022g0074@g.neec.ac.jp","k022g0012@g.neec.ac.jp",
 	"k022g0001@g.neec.ac.jp" };
 
-	// 並べ替える
-	Sort(str, 0, (int)str.size() - 1);
+	// 昇順に並べ替える
+	std::sort(str.begin(), str.end());
 
 	// 文字列の表示
 	for (int i = 0; i < str.size(); i++) {
